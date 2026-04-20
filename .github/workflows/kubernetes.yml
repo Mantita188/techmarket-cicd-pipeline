@@ -1,0 +1,26 @@
+name: TechMarket EKS Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      strategy:
+        description: 'Estrategia de despliegue (rolling, canary, blue-green)'
+        required: true
+        default: 'rolling'
+      eks_cluster_name:
+        description: 'Nombre del Clúster EKS'
+        required: true
+        default: 'techmarket-cluster'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Deploy to EKS
+      run: |
+        echo "Desplegando en TechMarket usando estrategia: ${{ github.event.inputs.strategy }}"
+        echo "Conectando al clúster: ${{ github.event.inputs.eks_cluster_name }}"
+        # Aquí irían los comandos de kubectl apply
