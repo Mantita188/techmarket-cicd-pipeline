@@ -22,3 +22,19 @@ Las plantillas están diseñadas para ser flexibles y evitar la duplicidad de c�
 * **Reducción de Errores**: La automatización de pruebas y auditorías (`npm test`, `npm audit`) minimiza fallos en producción.
 * **Agilidad**: El uso de caché y plantillas reduce el "Time-to-Market" de nuevas funcionalidades.
 * **Eficiencia Operativa**: Las estrategias de despliegue parametrizadas aseguran un **Zero Downtime**, permitiendo que la tienda de TechMarket esté siempre disponible para los clientes.
+
+## 5. Uso de Plantillas Reutilizables
+
+Las plantillas se encuentran en:
+
+.github/workflows/templates/
+
+Ejemplo de uso:
+
+```yaml
+jobs:
+  build:
+    uses: ./.github/workflows/templates/template_build.yml
+    with:
+      node_version: "20"
+      image_name: "techmarket-app"
