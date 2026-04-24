@@ -6,14 +6,14 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/templates/template_build.yml
+    uses: ./.github/workflows/template_build.yml
     with:
       node_version: "20"
       image_name: "techmarket-app"
 
   test:
     needs: build
-    uses: ./.github/workflows/templates/template_test.yml
+    uses: ./.github/workflows/template_test.yml
     with:
       node_version: "20"
 
@@ -48,7 +48,7 @@ jobs:
 
   deploy:
     needs: push-ecr
-    uses: ./.github/workflows/templates/template_deploy.yml
+    uses: ./.github/workflows/template_deploy.yml
     with:
       cluster_name: "techmarket-cluster"
       strategy: "rolling"

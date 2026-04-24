@@ -15,7 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy
+      - name: Simulate Deploy
         run: |
           echo "Deploy en cluster: ${{ inputs.cluster_name }}"
           echo "Estrategia: ${{ inputs.strategy }}"
+          echo "kubectl apply -f deployment.yaml"
+          echo "Despliegue simulado correctamente 🚀"
