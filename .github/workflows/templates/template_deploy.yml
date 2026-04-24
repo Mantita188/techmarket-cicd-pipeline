@@ -1,0 +1,21 @@
+name: Template Deploy
+
+on:
+  workflow_call:
+    inputs:
+      cluster_name:
+        required: true
+        type: string
+      strategy:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        run: |
+          echo "Deploy en cluster: ${{ inputs.cluster_name }}"
+          echo "Estrategia: ${{ inputs.strategy }}"
