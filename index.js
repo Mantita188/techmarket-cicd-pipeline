@@ -20,8 +20,10 @@ app.get('/', (req, res) => {
     res.send(greeting);
 });
 
-app.listen(port, () => {
-    console.log(`Servidor de TechMarket en http://localhost:${port}`);
-});
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Servidor de TechMarket en http://localhost:${port}`);
+    });
+}
 
 module.exports = { greet };
