@@ -58,3 +58,15 @@ jobs:
     with:
       node_version: "20"
       image_name: "techmarket-app"
+
+## 6. Uso de Inteligencia Artificial
+
+Para el desarrollo de este proyecto se utilizó apoyo de herramientas de Inteligencia Artificial, específicamente ChatGPT, con el fin de:
+
+- Comprender conceptos relacionados con CI/CD, Docker y GitHub Actions.
+- Apoyar en la estructuración de los pipelines.
+- Mejorar la documentación y buenas prácticas.
+
+Sin embargo, la implementación, configuración y validación del proyecto fue realizada de manera autónoma, asegurando la comprensión de cada componente utilizado.
+
+---
