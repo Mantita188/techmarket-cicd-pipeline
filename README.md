@@ -77,3 +77,10 @@ Para el microservicio crítico "TechMarket Orders", implementamos una estrategia
 
 **Agilidad del Negocio:**
 Esta arquitectura impulsa la agilidad del equipo de desarrollo. Al tener un entorno "Green" idéntico a producción para realizar pruebas finales de humo antes de exponer la aplicación al usuario, se reduce drásticamente el riesgo operativo. Esto otorga al equipo la confianza técnica necesaria para aumentar la frecuencia de entregas (múltiples despliegues diarios), respondiendo de forma más rápida a los requerimientos del mercado de TechMarket.
+
+---
+## 8. Referencias Bibliográficas
+
+* Amazon Web Services. (2024). *Estrategias de despliegue y pruebas con AWS CodeDeploy*. AWS Documentation. Recuperado de https://docs.aws.amazon.com/es_es/codedeploy/
+* Kubernetes. (2024). *Performing a Rolling Update on a Deployment*. Kubernetes Documentation. Recuperado de https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-intro/
+* Fowler, M. (2010). *BlueGreenDeployment*. MartinFowler.com. Recuperado de https://martinfowler.com/bliki/BlueGreenDeployment.html
