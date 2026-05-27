@@ -57,13 +57,14 @@ D. Velocidad de DespliegueMide el tiempo transcurrido desde que se inicia la fas
 -   Rolling Update: Tiene una velocidad moderada-lenta. Está supeditada al tiempo que toman las instancias en iniciar, estabilizarse y aprobar secuencialmente los health checks establecidos antes de avanzar con el siguiente bloque de nodos.
 -    Blue-Green Deployment: Velocidad de entrega alta. Aunque el despliegue inicial en el entorno Green se realice de forma pasiva, la propagación del cambio hacia los usuarios finales ocurre de manera instantánea en un solo movimiento de red.
 -    Canary Deployment: Es la estrategia más lenta por diseño. La propagación del cambio está planificada para transcurrir a lo largo de horas o días, incrementando el flujo de tráfico de manera muy escalonada (ej. 5%, 10%, 25%, 50%, 100%) con el fin de recopilar datos estadísticos suficientes bajo escenarios de carga real.  
-2. Matriz Comparativa de Ventajas y DesventajasA continuación, se sintetizan los trade-offs de cada enfoque técnico para facilitar una toma de decisiones alineada con los objetivos del negocio y de TI:  
-| Estrategia | Ventajas Clave | Limitaciones | Impacto en Uptime | Facilidad de Rollback | Gasto Infraestructura |
+2. Matriz Comparativa de Ventajas y DesventajasA continuación, se sintetizan los trade-offs de cada enfoque técnico para facilitar una toma de decisiones alineada con los objetivos del negocio y de TI:
+
+| Estrategia | Ventajas Clave | Limitaciones | Impacto Uptime | Rollback | Gasto Infra |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **All-in-Once** | Simplicidad y bajo costo | Interrupción obligatoria | Bajo (Downtime) | Compleja / Manual | Muy Bajo |
-| **Rolling Update** | Zero downtime nativo | Requiere compatibilidad BD | Alto | Media / Automatizada | Bajo |
-| **Blue-Green** | Rollback inmediato | Duplicación de costos | Máximo (100%) | Mínima / Instantánea | Muy Alto |
-| **Canary** | Feedback real controlado | Telemetría compleja | Excelente | Muy alta / Segura | Moderado |
+| **All-in-Once** | Simplicidad | Interrupción | Bajo | Manual | Muy Bajo |
+| **Rolling Update** | Zero downtime | Compatibilidad BD | Alto | Automatizada | Bajo |
+| **Blue-Green** | Rollback instantáneo | Duplica costos | Máximo | Inmediato | Muy Alto |
+| **Canary** | Feedback real | Telemetría compleja | Excelente | Segura | Moderado |
 
 ## Paso 3: Selección Justificada para "TechMarket Orders"
 Estrategia Seleccionada: Blue-Green Deployment.
