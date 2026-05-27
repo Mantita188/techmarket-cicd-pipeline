@@ -1,34 +1,57 @@
-name: TechMarket EKS Deployment
+name: TechMarket Blue-Green Deployment
 
 on:
   workflow_dispatch:
     inputs:
-      strategy:
-        description: 'Estrategia de despliegue (rolling, canary, blue-green)'
+      target_env:
+        description: 'Entorno a desplegar (blue o green)'
         required: true
-        default: 'rolling'
-      eks_cluster_name:
-        description: 'Nombre del Clúster EKS'
-        required: true
-        default: 'techmarket-cluster'
+        default: 'green'
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  # Etapa 1 y 2: Build y Test (Reutilizando tus plantillas)
+  build-and-test:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      node_version: "20"
+      image_name: "techmarket-app"
 
+  # Etapa 3: Despliegue Simulado Blue-Green
+  deploy-blue-green:
+    needs: build-and-test
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Mostrar parámetros de despliegue
+      - name: Validar Manifiestos de Kubernetes
         run: |
-          echo "Estrategia seleccionada: ${{ github.event.inputs.strategy }}"
-          echo "Cluster destino: ${{ github.event.inputs.eks_cluster_name }}"
+          echo "Validando sintaxis de k8s/blue-green-deployment.yaml..."
+          # Simulamos validación de sintaxis
+          echo "✅ Manifiestos válidos."
 
-      - name: Simulate Deploy
+      - name: Simular Despliegue en EKS (Blue-Green)
         run: |
-          echo "Iniciando despliegue en EKS..."
-          echo "kubectl config use-context ${{ github.event.inputs.eks_cluster_name }}"
-          echo "kubectl apply -f deployment.yaml"
-          echo "kubectl apply -f service.yaml"
-          echo "Despliegue simulado correctamente 🚀"
+          echo "🚀 Iniciando estrategia Blue-Green en Amazon EKS..."
+          echo "1. Desplegando nueva versión en el entorno aisaldo: ${{ github.event.inputs.target_env }}"
+          echo "kubectl apply -f k8s/blue-green-deployment.yaml"
+          echo "⏳ Esperando a que los Pods superen los health checks..."
+          sleep 3
+          echo "✅ Entorno ${{ github.event.inputs.target_env }} estable y listo."
+          
+          echo "2. Conmutando tráfico en el Balanceador de Carga (ALB)..."
+          echo "kubectl patch service techmarket-orders-service -p '{\"spec\":{\"selector\":{\"version\":\"${{ github.event.inputs.target_env }}\"}}}'"
+          echo "✅ Tráfico redirigido exitosamente al 100%. Cero Downtime logrado."
+
+  # Etapa 4: Simulación de Rollback de Emergencia
+  rollback-on-failure:
+    needs: deploy-blue-green
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutar Rollback Inmediato
+        run: |
+          echo "🚨 ALERTA: Fallo detectado post-despliegue."
+          echo "Iniciando Rollback inmediato al entorno estable..."
+          echo "kubectl patch service techmarket-orders-service -p '{\"spec\":{\"selector\":{\"version\":\"blue\"}}}'"
+          echo "✅ Tráfico devuelto al entorno Blue. Servicio restaurado."

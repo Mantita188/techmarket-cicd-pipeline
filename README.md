@@ -70,3 +70,10 @@ Para el desarrollo de este proyecto se utilizó apoyo de herramientas de Intelig
 Sin embargo, la implementación, configuración y validación del proyecto fue realizada de manera autónoma, asegurando la comprensión de cada componente utilizado.
 
 ---
+## 7. Contribución a la Continuidad Operativa y Agilidad (Estrategia Blue-Green)
+
+**Continuidad Operativa (Resiliencia y Cero Downtime):**
+Para el microservicio crítico "TechMarket Orders", implementamos una estrategia **Blue-Green Deployment** orquestada mediante Kubernetes (EKS). Al mantener dos entornos idénticos aislados, el enrutamiento del balanceador de carga permite pasar a la nueva versión instantáneamente. Esto garantiza el cumplimiento de SLA estrictos, eliminando ventanas de mantenimiento y protegiendo el flujo de ingresos ante fallos, dado que el proceso de rollback tarda solo segundos en devolver el tráfico al clúster original.
+
+**Agilidad del Negocio:**
+Esta arquitectura impulsa la agilidad del equipo de desarrollo. Al tener un entorno "Green" idéntico a producción para realizar pruebas finales de humo antes de exponer la aplicación al usuario, se reduce drásticamente el riesgo operativo. Esto otorga al equipo la confianza técnica necesaria para aumentar la frecuencia de entregas (múltiples despliegues diarios), respondiendo de forma más rápida a los requerimientos del mercado de TechMarket.

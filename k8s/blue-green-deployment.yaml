@@ -1,0 +1,69 @@
+# 1. ENTORNO BLUE (Versión Estable Actual)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techmarket-orders-blue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: techmarket-orders
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: techmarket-orders
+        version: blue
+    spec:
+      containers:
+      - name: orders-api
+        image: techmarket-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: APP_COLOR
+          value: "BLUE (Versión 1.0 Estable)"
+
+---
+# 2. ENTORNO GREEN (Nueva Versión a Validar)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techmarket-orders-green
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: techmarket-orders
+      version: green
+  template:
+    metadata:
+      labels:
+        app: techmarket-orders
+        version: green
+    spec:
+      containers:
+      - name: orders-api
+        image: techmarket-app:v2
+        ports:
+        - containerPort: 3000
+        env:
+        - name: APP_COLOR
+          value: "GREEN (Versión 2.0 Nueva)"
+
+---
+# 3. BALANCEADOR DE CARGA (El Switch de Tráfico)
+apiVersion: v1
+kind: Service
+metadata:
+  name: techmarket-orders-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "external"
+spec:
+  type: LoadBalancer
+  selector:
+    app: techmarket-orders
+    version: blue # <--- Al cambiar de 'blue' a 'green', ocurre el despliegue sin downtime
+  ports:
+  - port: 80
+    targetPort: 3000
