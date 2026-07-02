@@ -1,0 +1,29 @@
+name: Remediación Automática (Rollback)
+on:
+  repository_dispatch:
+    types: [trigger-rollback] # Este nombre debe coincidir con lo que envíe tu Lambda
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Kubeconfig
+        run: |
+          # Aquí configurarías el acceso a tu clúster EKS/Kubernetes
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" > kubeconfig.yaml
+          export KUBECONFIG=kubeconfig.yaml
+
+      - name: Ejecutar Rollback al entorno Blue
+        run: |
+          # Esto revierte al último despliegue exitoso
+          kubectl rollout undo deployment/techmarket-orders-blue --namespace=default
+
+      - name: Verificar salud del servicio
+        run: |
+          # Esperar un momento a que los pods inicien
+          sleep 30
+          # Validar que el servicio responde (200 OK)
+          curl -f http://tu-endpoint-de-produccion/health || exit 1
