@@ -1,7 +1,9 @@
 name: Remediación Automática (Rollback)
+
 on:
   repository_dispatch:
-    types: [trigger-rollback] # Este nombre debe coincidir con lo que envíe tu Lambda
+    types: [trigger-rollback]
+  workflow_dispatch: # Este nombre debe coincidir con lo que envíe tu Lambda
 
 jobs:
   rollback:
